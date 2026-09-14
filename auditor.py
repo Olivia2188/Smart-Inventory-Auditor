@@ -14,4 +14,12 @@ while True:
         print("Invalid input. Please enter as numbers (Eg: 1,2,3...)")
         continue
 
+    inventory += user_input
+
+    if inventory>500:
+        print("Stock exceed storage capacity!")
+        break
+
+
+
     user_input = int(user_input)
