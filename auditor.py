@@ -5,7 +5,7 @@ while True:
 
     if user_input == "quit":
         break
-
+    
     if not user_input.isdigit():
         print("Error. Please enter as numbers (Eg: 1,2,3...)")
         continue
