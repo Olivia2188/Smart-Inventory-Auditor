@@ -1,4 +1,5 @@
 num_of_failed = 0
+transaction_history = []    # creating an empty list
 
 def load_inventory():
     try:
@@ -56,9 +57,11 @@ while True:
     num_of_failed += failed_attempts
     if user_input == "quit":
         generate_report(inventory, num_of_failed)
+        print(transaction_history)
         break
 
     inventory = process_delivery(inventory, user_input)
+    transaction_history.append(user_input)     # add the value to end of list
 
     tax = calculate_tax(user_input)
 
