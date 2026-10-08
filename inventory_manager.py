@@ -38,7 +38,7 @@ def display_all(items):
 def add_product(items):
     print("Add New Product")
 
-    product_id = input("Product ID:")
+    product_id = input("Product ID:").upper()
     product_name = input("Product Name:")
     product_price = float(input("Price:"))
     product_stock = int(input("Number of stock:"))
@@ -157,7 +157,7 @@ while True:
         print("Thank you for using Inventory Management System.")
         print("Program terminated.")
         break
-    
+
     else:
         print("Invalid option. Please try again.")
 
