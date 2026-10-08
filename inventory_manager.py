@@ -1,3 +1,5 @@
+import json
+
 inventory = [
     {
         "id": "P001",      # product 1
@@ -18,3 +20,96 @@ inventory = [
         "stock": 25
     }
 ]
+
+def display_all(items):
+    print("Current Inventory")
+    print("---------------------------")
+
+    for product in items:
+        print(
+            f"ID: {product['id']}  | "
+            f"Name:{product['name']}   | " 
+            f"Price: ${product['price']:.2f} | "
+            f"Stock: {product['stock']}"
+        )
+
+    print("----------------------------")
+
+def add_product(items):
+    print("Add New Product")
+
+    product_id = input("Product ID:")
+    product_name = input("Product Name:")
+    product_price = float(input("Price:"))
+    product_stock = int(input("Number of stock:"))
+
+    new_product = {
+        "id": product_id,
+        "name": product_name,
+        "price": product_price,
+        "stock":product_stock
+    }
+
+    items.append(new_product)
+
+    print("Product added successfully")
+
+def update_stock(items):
+    print ("Update Stock")
+
+    while True:
+        product_id = input("Enter Product ID:")
+
+        for product in items:
+            if product["id"] == product_id:
+                print("Product Found:")
+                print("Name:", product["name"])
+                print("Current Stock:", product["stock"])
+
+                new_stock = int(input("New Stock Quantity: "))
+                product["stock"] = new_stock
+
+                print("Stock updated successfully!")
+                display_all(items)
+                return
+
+        print("Product not found.")
+
+def search_product(items):
+    print("Search Product")
+
+    while True:
+        product_id = input("Enter Product ID: ")
+
+        for product in items:
+            if product["id"] == product_id:
+                print("Product Found")
+                print("-----------------------------------")
+                print("ID:", product["id"])
+                print("Name:", product["name"])
+                print(f"Price: ${product['price']:.2f}")
+                print("Stock:", product["stock"])
+                print("-----------------------------------")
+                return
+
+        print("Product not found.")
+
+def load_inventory():
+    try:
+        file = open("inventory.json", "r")
+        inventory = json.load(file)
+        file.close()
+
+        print("inventory.json found.")
+        print("Inventory loaded successfully.")
+
+        return inventory
+
+    except FileNotFoundError:
+        print("inventory.json not found")
+        return []
+
+
+display_all(inventory)
+test_inventory = load_inventory()
+print(test_inventory)
