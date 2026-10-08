@@ -109,6 +109,14 @@ def load_inventory():
         print("inventory.json not found")
         return []
 
+def save_inventory(inventory):
+    file = open("inventory.json", "w")
+
+    json.dump(inventory, file, indent=4)
+
+    file.close()
+
+    print("Inventory saved successfully to inventory.json.")
 
 display_all(inventory)
 test_inventory = load_inventory()
