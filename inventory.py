@@ -3,7 +3,7 @@ class Inventory:
         self.__products = []
 
     def add_product(self, product):
-        self.__products.apppend(product)
+        self.__products.append(product)
 
     def search_product(self, product_id):
         for product in self.__products:
