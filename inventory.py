@@ -1,21 +1,32 @@
-class Inventory:
-    def __init__(self):
-        self.__products = []
+from product import Product
 
-    def get_products(self):
+class Inventory:
+    def __init__(self) -> None:
+        self.__products: list[Product] = []
+
+    def get_products(self) -> list[Product]:
         return self.__products
     
-    def add_product(self, product):
+    def add_product(self, product: Product) -> None:
         self.__products.append(product)
 
-    def search_product(self, product_id):
+    def remove_product(self, product_id: str) -> None:
+        for product in self.__products:
+            if product.get_product_id() == product_id:
+                self.__products.remove(product)
+                return
+
+    def find_product(self, product_id: str) -> Product | None:
         for product in self.__products:
             if product.get_product_id() == product_id:
                 return product
 
         return None
+    
+    def search_product(self, product_id: str) -> Product | None:
+        return self.find_product(product_id)
 
-    def display_all(self):
+    def display_all(self) -> None:
         print("Current Inventory")
         print("-------------------------------------")
 
