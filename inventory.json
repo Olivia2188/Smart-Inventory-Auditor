@@ -4,6 +4,11 @@
         "name": "Laptop",
         "price": 1200.0,
         "stock": 15,
+        "supplier": {
+            "supplier_id": "UNASSIGNED",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "physical",
         "weight": 2.5
     },
@@ -12,6 +17,11 @@
         "name": "Mouse",
         "price": 25.5,
         "stock": 40,
+        "supplier": {
+            "supplier_id": "UNASSIGNED",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "physical",
         "weight": 0.2
     },
@@ -20,6 +30,11 @@
         "name": "Keyboard",
         "price": 45.0,
         "stock": 50,
+        "supplier": {
+            "supplier_id": "UNASSIGNED",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "physical",
         "weight": 0.8
     },
@@ -28,6 +43,11 @@
         "name": "Monitor",
         "price": 299.99,
         "stock": 20,
+        "supplier": {
+            "supplier_id": "UNASSIGNED",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "physical",
         "weight": 5.0
     },
@@ -36,6 +56,11 @@
         "name": "Book",
         "price": 5.0,
         "stock": 30,
+        "supplier": {
+            "supplier_id": "UNASSIGNED",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "physical",
         "weight": 0.5
     },
@@ -44,7 +69,38 @@
         "name": "SOFTWARE",
         "price": 49.99,
         "stock": 80,
+        "supplier": {
+            "supplier_id": "UNASSIGNED",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "digital",
         "download_size": 500.0
+    },
+    {
+        "id": "P010",
+        "name": "Webcam",
+        "price": 59.9,
+        "stock": 10,
+        "supplier": {
+            "supplier_id": "S001",
+            "name": "ABC Electronics",
+            "contact_email": "contact@abc.com"
+        },
+        "type": "physical",
+        "weight": 0.3
+    },
+    {
+        "id": "D010",
+        "name": "Antivirus",
+        "price": 29.9,
+        "stock": 50,
+        "supplier": {
+            "supplier_id": "S002",
+            "name": "Software Solutions",
+            "contact_email": "contact@software.com"
+        },
+        "type": "digital",
+        "download_size": 250.0
     }
 ]

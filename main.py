@@ -2,22 +2,45 @@ import json
 from physical_product import PhysicalProduct
 from digital_product import DigitalProduct
 from inventory import Inventory
+from supplier import Supplier
 
 def load_inventory():
     inventory = Inventory()
+    suppliers = {}
 
     try:
         with open("inventory.json", "r") as file:
             data = json.load(file)
 
         for item in data:
+            supplier_data = item.get("supplier")
+
+            if supplier_data is None:
+                supplier_data = {
+                    "supplier_id": "UNASSIGNED",
+                    "name": "Unassigned Supplier",
+                    "contact_email": ""
+                }
+
+            supplier_id = supplier_data["supplier_id"]
+
+            if supplier_id not in suppliers:
+                suppliers[supplier_id] = Supplier(
+                    supplier_id,
+                    supplier_data["name"],
+                    supplier_data["contact_email"]
+                )
+
+            supplier = suppliers[supplier_id]
+
             if item["type"] == "physical":
                 product = PhysicalProduct(
                     item["id"],
                     item["name"],
                     item["price"],
                     item["stock"],
-                    item["weight"]
+                    item["weight"],
+                    supplier
                 )
             
             elif item["type"] == "digital":
@@ -26,7 +49,8 @@ def load_inventory():
                     item["name"],
                     item["price"],
                     item["stock"],
-                    item["download_size"]
+                    item["download_size"],
+                    supplier
                 )
 
             else:
@@ -46,11 +70,18 @@ def save_inventory(inventory):
     data = []
 
     for product in inventory.get_products():
+        supplier = product.get_supplier()
+
         product_data = {
             "id": product.get_product_id(),
             "name": product.get_name(),
             "price": product.get_price(),
-            "stock": product.get_stock()
+            "stock": product.get_stock(),
+            "supplier":{
+                "supplier_id": supplier.get_supplier_id(),
+                "name": supplier.get_name(),
+                "contact_email": supplier.get_contact_email()
+            }
         }
 
         if isinstance(product, PhysicalProduct):
@@ -103,17 +134,26 @@ while True:
         name = input("Product Name: ")
         price = float(input("Product Price: "))
         stock = int(input("Stock Quantity: "))
+        supplier_id = input("Supplier ID: ").upper()
+        supplier_name = input("Supplier Name: ")
+        supplier_email = input("Supplier Email: ")
+
+        supplier = Supplier(
+            supplier_id,
+            supplier_name,
+            supplier_email
+        )
 
         if product_type == "1":
             weight = float(input("Weight (kg): "))
             new_product = PhysicalProduct(
-                product_id, name, price, stock, weight
+                product_id, name, price, stock, weight, supplier
             )
 
         elif product_type == "2":
             download_size = float(input("Download Size (MB): "))
             new_product = DigitalProduct(
-                product_id, name, price, stock, download_size
+                product_id, name, price, stock, download_size, supplier
             )
 
         inventory.add_product(new_product)
