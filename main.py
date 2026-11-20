@@ -3,6 +3,7 @@ from physical_product import PhysicalProduct
 from digital_product import DigitalProduct
 from inventory import Inventory
 from supplier import Supplier
+from product_factory import ProductFactory
 
 def load_inventory():
     inventory = Inventory()
