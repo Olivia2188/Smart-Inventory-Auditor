@@ -5,6 +5,20 @@ from inventory import Inventory
 from supplier import Supplier
 from product_factory import ProductFactory
 
+def get_positive_float(prompt: str) -> float:
+    while True:
+        try:
+            value = float(input(prompt))
+
+            if value <= 0:
+                print("Please enter a number greater than zero.")
+                continue
+
+            return value
+
+        except ValueError:
+            print("Please enter a valid number, e.g. 12.50")
+
 def load_inventory():
     inventory = Inventory()
     suppliers = {}
@@ -34,31 +48,23 @@ def load_inventory():
 
             supplier = suppliers[supplier_id]
 
-            if item["type"] == "physical":
-                product = PhysicalProduct(
-                    item["id"],
-                    item["name"],
-                    item["price"],
-                    item["stock"],
-                    item["weight"],
-                    supplier
-                )
             
-            elif item["type"] == "digital":
-                product = DigitalProduct(
+            try:
+                product = ProductFactory.create(
+                    item["type"],
                     item["id"],
                     item["name"],
                     item["price"],
                     item["stock"],
-                    item["download_size"],
-                    supplier
+                    supplier,
+                    weight=item.get("weight"),
+                    download_size=item.get("download_size")
                 )
 
-            else:
-                print("Unknown product type. Skipping product.")
-                continue
+                inventory.add_product(product)
 
-            inventory.add_product(product)
+            except ValueError as error:
+                print("Skipping product:", error)
 
         print("Inventory loaded successfully.")
 
@@ -133,7 +139,7 @@ while True:
 
         product_id = input("Product ID: ").upper()
         name = input("Product Name: ")
-        price = float(input("Product Price: "))
+        price = get_positive_float("Product Price: ")
         stock = int(input("Stock Quantity: "))
         supplier_id = input("Supplier ID: ").upper()
         supplier_name = input("Supplier Name: ")
@@ -147,14 +153,26 @@ while True:
 
         if product_type == "1":
             weight = float(input("Weight (kg): "))
-            new_product = PhysicalProduct(
-                product_id, name, price, stock, weight, supplier
+            new_product = ProductFactory.create(
+                "physical",
+                product_id,
+                name,
+                price,
+                stock,
+                supplier,
+                weight=weight
             )
 
         elif product_type == "2":
             download_size = float(input("Download Size (MB): "))
-            new_product = DigitalProduct(
-                product_id, name, price, stock, download_size, supplier
+            new_product = ProductFactory.create(
+                "digital",
+                product_id,
+                name,
+                price,
+                stock,
+                supplier,
+                download_size=download_size
             )
 
         inventory.add_product(new_product)
